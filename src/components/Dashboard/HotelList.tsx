@@ -123,7 +123,7 @@ const HotelDetailsModal: React.FC<{
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [isEditingOwner, setIsEditingOwner] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(
-    hotel.verificationStatus
+    hotel.verificationStatus,
   );
   const [statusNotes, setStatusNotes] = useState(hotel.verificationNotes || "");
   const [ownerName, setOwnerName] = useState(hotel.ownerName);
@@ -185,7 +185,7 @@ const HotelDetailsModal: React.FC<{
       setIsEditingStatus(false);
     } catch (error) {
       setUpdateError(
-        error instanceof Error ? error.message : "Failed to update status"
+        error instanceof Error ? error.message : "Failed to update status",
       );
     } finally {
       setIsUpdating(false);
@@ -222,7 +222,7 @@ const HotelDetailsModal: React.FC<{
       setUpdateError(
         error instanceof Error
           ? error.message
-          : "Failed to update owner information"
+          : "Failed to update owner information",
       );
     } finally {
       setIsUpdating(false);
@@ -608,7 +608,7 @@ const HotelDetailsModal: React.FC<{
                                 option.value as
                                   | "verified"
                                   | "pending"
-                                  | "unverified"
+                                  | "unverified",
                               )
                             }
                           >
@@ -623,7 +623,7 @@ const HotelDetailsModal: React.FC<{
                                     option.value as
                                       | "verified"
                                       | "pending"
-                                      | "unverified"
+                                      | "unverified",
                                   )
                                 }
                                 className="mt-1 mr-3"
@@ -789,13 +789,13 @@ const HotelList: React.FC = () => {
       let payload = {};
 
       if (updates.type === "status") {
-        endpoint = `http://localhost:5000/api/hotels/${hotelId}/verification-status`;
+        endpoint = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/hotels/${hotelId}/verification-status`;
         payload = {
           verificationStatus: updates.verificationStatus,
           verificationNotes: updates.verificationNotes,
         };
       } else if (updates.type === "owner") {
-        endpoint = `http://localhost:5000/api/hotels/${hotelId}/owner-info`;
+        endpoint = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/hotels/${hotelId}/owner-info`;
         payload = {
           ownerName: updates.ownerName,
           ownerPhone: updates.ownerPhone,
@@ -836,8 +836,8 @@ const HotelList: React.FC = () => {
                   ownerPhone: updates.ownerPhone,
                 }),
               }
-            : hotel
-        )
+            : hotel,
+        ),
       );
 
       // Update selected hotel if it's the one being updated
@@ -860,7 +860,7 @@ const HotelList: React.FC = () => {
                   ownerPhone: updates.ownerPhone,
                 }),
               }
-            : null
+            : null,
         );
       }
     } catch (error) {
@@ -897,13 +897,13 @@ const HotelList: React.FC = () => {
       });
 
       const response = await fetch(
-        `http://localhost:5000/api/hotels/all?${queryParams}`,
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/hotels/all?${queryParams}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (response.status === 401) {
@@ -1243,7 +1243,7 @@ const HotelList: React.FC = () => {
                 Showing {(pagination.currentPage - 1) * pagination.limit + 1} to{" "}
                 {Math.min(
                   pagination.currentPage * pagination.limit,
-                  pagination.totalCount
+                  pagination.totalCount,
                 )}{" "}
                 of {pagination.totalCount} hotels
               </div>

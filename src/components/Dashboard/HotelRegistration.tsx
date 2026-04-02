@@ -166,7 +166,7 @@ const HotelRegistration: React.FC = () => {
   const handleRegisterChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
 
@@ -199,7 +199,7 @@ const HotelRegistration: React.FC = () => {
 
   const validateGST = (gst: string): boolean => {
     return /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(
-      gst.toUpperCase()
+      gst.toUpperCase(),
     );
   };
 
@@ -227,7 +227,7 @@ const HotelRegistration: React.FC = () => {
             type: "error",
             text: "Unable to get location. Please enable location services.",
           });
-        }
+        },
       );
     } else {
       setMessage({
@@ -394,7 +394,7 @@ const HotelRegistration: React.FC = () => {
       const fullAddress = `${address.street}, ${address.city}, ${address.state} ${address.zipCode}, ${address.country}`;
 
       const response = await fetch(
-        "http://localhost:5000/api/hotels/register",
+        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/hotels/register`,
         {
           method: "POST",
           headers: {
@@ -425,7 +425,7 @@ const HotelRegistration: React.FC = () => {
               rank: policeAuth.police?.rank,
             },
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -1106,7 +1106,7 @@ const HotelRegistration: React.FC = () => {
                   <div className="flex items-center mb-2">
                     {(() => {
                       const statusOption = verificationStatusOptions.find(
-                        (opt) => opt.value === registerForm.verificationStatus
+                        (opt) => opt.value === registerForm.verificationStatus,
                       );
                       const IconComponent = statusOption?.icon || Shield;
                       return (
